@@ -103,7 +103,7 @@ except Exception as e:
 
 try:
     # Save new model version as latest model
-    # IMPORTANT: this is the file that will be picked up from CI pipeline.
+    # IMPORTANT: this is the file that will be picked up from CI pipeline and HF.
     last_model_path = LATEST_MODEL_PATH
     # clean folder
     if os.path.exists(last_model_path):

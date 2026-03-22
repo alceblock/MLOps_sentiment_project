@@ -1,8 +1,5 @@
-from enum import Enum
 import os
 import re
-
-#from transformers import AutoModelForSequenceClassification
 import shutil
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 

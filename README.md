@@ -1,17 +1,17 @@
-# Just a README file
-MLOps project request:
+# MLOps sentiment - README file
 Project details
-Phase 1: Implementation of the Sentiment Analysis Model
-Model: Use a pre-trained model for sentiment analysis capable of classifying social media texts into positive, neutral, or negative sentiment. Use this model: https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest
-Dataset: Use public datasets containing texts and their respective sentiment labels.
-Phase 2: Creation of the CI/CD Pipeline
-CI/CD Pipeline: Develop an automated pipeline for model training, integration testing, and deployment of the application on Hugging Face.
-Phase 3: Deployment and Continuous Monitoring
-Deployment on Hugging Face (optional): Implement the sentiment analysis model, including data and application, on Hugging Face to facilitate integration and scalability.
-Monitoring System: Set up a monitoring system to continuously evaluate the model’s performance and the detected sentiment.
+- Phase 1: Implementation of the Sentiment Analysis Model
+  - Model: Use a pre-trained model for sentiment analysis capable of classifying social media texts into positive, neutral, or negative sentiment. Use this model: https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest
+  - Dataset: Use public datasets containing texts and their respective sentiment labels.
+- Phase 2: Creation of the CI/CD Pipeline
+  - CI/CD Pipeline: Develop an automated pipeline for model training, integration testing, and deployment of the application on Hugging Face.
+- Phase 3: Deployment and Continuous Monitoring
+  - Deployment on Hugging Face (optional): Implement the sentiment analysis model, including data and application, on Hugging Face to facilitate integration and scalability.
+  - Monitoring System: Set up a monitoring system to continuously evaluate the model’s performance and the detected sentiment.
 
 # PREVIEW:
 ## Structure
+```bash
 MLops_project/
 ├── .github/workflows/
 │   └── CI_integration.yml    # Continuous integration pipeline
@@ -31,34 +31,45 @@ MLops_project/
 ├── Dockerfile                # Docker image config
 └── requirements.txt
 └── pytest.ini                # File needed by pytest
+```
 
-## extra, created by the app:
+## extra folders, created by the app:
+```bash
 ├── my_latest_model           # It contains the latest created model
 ├── my_model_versions         # It contains the versioning of each created model (the latest one '/model_v_{newer_version}' it is the same one inside 'my_latest_model' )
+```
 
 
 
 ## Use suggestions:
-Tested on a macOS (UNIX).
-Python version 3.12 required.
+- Tested on a macOS (UNIX).
+- Python version 3.12 required.
 
 
 # GENERAL APP FLOW:
-- When the app starts (using docker), in ```model_inference.py``` tha app checks for existing models (if never used before or deleted every previous model, it will be used the default one and needed folders will be created) and then uvicorn runs the inference api.
-- At this point, predictions and evaluation can be made by the app.
-- When the project is updated through a commit on github (only 'main' branch), the pipeline file ```CI_continuous_integration.yml``` trains the model, runs integration tests (```test_integration.py```) and, if these steps ends with a success, it (optionally) deploys the model on HuggingFace.
-- While the app is running, the connection with Grafana made through Prometheus (pages reachable through the 'port' section in your terminal) allows to monitor visually the performance of the model and the sentiment.
+- When the app starts (using docker), in ```model_inference.py``` tha app checks for existing models (if never used before or deleted every previous model, it will be used the default one and needed folders will be created) and then uvicorn runs the inference api (```/predict```).
+- At this point, predictions and evaluation can be made calling ```/predict```.
+- When the project is updated through a commit on github's 'main' branch, the pipeline file ```CI_CD.yml``` trains the model, runs integration tests (```test_integration.py```) and, if these steps ends with a success, it (optionally) deploys the model on HuggingFace.
+- While the app is running, the connection with Grafana made through Prometheus (pages reachable through the 'port' section in your terminal) allows to monitor visually the performance of the model and the sentiment (more at [grafana instructions](#grafana-dashboard)).
 
 
 # Technical choices:
 - In order to save resources (for example on github codespaces) these values have been set as small as reasonably possible:
--- ```raw_datasets = load_dataset(DATASET, "sentiment", split={"train": "train[:100]", "test": "test[:100]", "validation": "validation[:100]"})```; increase the values to have a bigger dataset.
--- same reason for ```per_device_train_batch_size=1,``` and ```per_device_eval_batch_size=1,``` inside ```TraningArguments``` in ```model_app/model_training.py```; ideally bring it at least up to value 8.
+  - ```raw_datasets = load_dataset(DATASET, "sentiment", split={"train": "train[:100]", "test": "test[:100]", "validation": "validation[:100]"})```; increase the values to have a bigger dataset.
+  - same reason for ```per_device_train_batch_size=1,``` and ```per_device_eval_batch_size=1,``` inside ```TraningArguments``` in ```model_app/model_training.py```; ideally bring it at least up to value 8 or higher if possible (32).
 
 
 # HOW TO USE IT:
-## Useful commands:
+## How to run it:
+- Create an environment (not mandatory but strongly suggested) and activate it.
+- Run ```docker compose up --build -d```, what it does is:
+  - ```docker compose up``` reads the docker-compose.yml and starts all the services
+  - ```--build```builds a new image 
+  - (optional) ```-d``` keeps the container in background (to not have the terminal saturated by logs).
+NOTE: to enable the deploy on Hugging Face go to [deploy instructions](#deploy-on-hugging-face)
 
+
+## Useful commands:
 - Create an environment:
 ```python3.12 -m venv <name_your_venv>```
 and activate it:
