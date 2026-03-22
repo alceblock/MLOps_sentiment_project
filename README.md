@@ -1,14 +1,14 @@
 # Just a README file
-MLOps project:
-Dettagli del Progetto
-Fase 1: Implementazione del Modello di Analisi del sentiment.
-Modello: Utilizzare un modello pre-addestrato per un’analisi del sentiment in grado di classificare testi dai social media in sentiment positivo, neutro o negativo. Servirsi di questo modello: https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest
-Dataset: Utilizzare dataset pubblici contenenti testi e le rispettive etichette di sentiment.
-Fase 2: Creazione della Pipeline CI/CD
-Pipeline CI/CD: Sviluppare una pipeline automatizzata per il training del modello, i test di integrazione e il deploy dell'applicazione su HuggingFace.
-Fase 3: Deploy e Monitoraggio Continuo
-Deploy su HuggingFace (facoltativo): Implementare il modello di analisi del sentiment, inclusi dati e applicazione, su HuggingFace per facilitare l'integrazione e la scalabilità.
-Sistema di Monitoraggio: Configurare un sistema di monitoraggio per valutare continuamente le performance del modello e il sentiment rilevato.
+MLOps project request:
+Project details
+Phase 1: Implementation of the Sentiment Analysis Model
+Model: Use a pre-trained model for sentiment analysis capable of classifying social media texts into positive, neutral, or negative sentiment. Use this model: https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest
+Dataset: Use public datasets containing texts and their respective sentiment labels.
+Phase 2: Creation of the CI/CD Pipeline
+CI/CD Pipeline: Develop an automated pipeline for model training, integration testing, and deployment of the application on Hugging Face.
+Phase 3: Deployment and Continuous Monitoring
+Deployment on Hugging Face (optional): Implement the sentiment analysis model, including data and application, on Hugging Face to facilitate integration and scalability.
+Monitoring System: Set up a monitoring system to continuously evaluate the model’s performance and the detected sentiment.
 
 # PREVIEW:
 ## Structure
