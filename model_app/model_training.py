@@ -47,10 +47,10 @@ training_args = TrainingArguments(
     output_dir="./results",
     eval_strategy="epoch",
     learning_rate=2e-5,
-    # per_device_train_batch_size=8,
-    # per_device_eval_batch_size=8,
-    per_device_train_batch_size=1,
-    per_device_eval_batch_size=1,
+    # per_device_train_batch_size=32,
+    # per_device_eval_batch_size=32,
+    per_device_train_batch_size=4,
+    per_device_eval_batch_size=4,
     num_train_epochs=3,
     weight_decay=0.01,
     save_total_limit=2,
@@ -60,7 +60,7 @@ training_args = TrainingArguments(
     metric_for_best_model="f1",
 )
 
-# metric = evaluate.load("accuracy")
+
 accuracy = evaluate.load("accuracy")
 precision = evaluate.load("precision")
 recall = evaluate.load("recall")

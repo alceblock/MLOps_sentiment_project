@@ -14,7 +14,7 @@ Project details
 ```bash
 MLops_project/
 ├── .github/workflows/
-│   └── CI_integration.yml    # Continuous integration pipeline
+│   └── CI_CD.yml    # Continuous integration and hugging face deploy pipeline
 ├── deploy/
 │   ├── deploy_hf.py    # File to deploy model into hugging face
 ├── model_app/
@@ -26,7 +26,7 @@ MLops_project/
 │   └── prometheus.yml        # Prometheus config
 ├── tests/
 │   └── test_integration.py # Integration tests
-│   └── test_model_training.py # Training tests
+│   └── test_model_training.py # Training tests (just utility)
 ├── docker-compose.yml        # Docker compose config
 ├── Dockerfile                # Docker image config
 └── requirements.txt
@@ -56,7 +56,7 @@ MLops_project/
 # Technical choices:
 - In order to save resources (for example on github codespaces) these values have been set as small as reasonably possible:
   - ```raw_datasets = load_dataset(DATASET, "sentiment", split={"train": "train[:100]", "test": "test[:100]", "validation": "validation[:100]"})```; increase the values to have a bigger dataset.
-  - same reason for ```per_device_train_batch_size=1,``` and ```per_device_eval_batch_size=1,``` inside ```TraningArguments``` in ```model_app/model_training.py```; ideally bring it at least up to value 8 or higher if possible (32).
+  - same reason for ```per_device_train_batch_size=4,``` and ```per_device_eval_batch_size=4,``` inside ```TraningArguments``` in ```model_app/model_training.py```; ideally bring it at least up to value 8 or higher, if possible 32 (best option), possibly not higher.
 
 
 # HOW TO USE IT:

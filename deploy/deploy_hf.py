@@ -16,7 +16,6 @@ LOCAL_FOLDER = LATEST_MODEL_PATH
 
 api = HfApi()
 
-# crea repo se non esiste
 api.create_repo(
     repo_id=REPO_ID,
     token=TOKEN,
